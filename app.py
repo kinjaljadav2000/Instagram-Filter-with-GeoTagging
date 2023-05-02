@@ -29,6 +29,11 @@ def get_gps(gps_tag):
     seconds = float(gps_tag.values[2].num) / float(gps_tag.values[2].den)
     return degrees + (minutes / 60.0) + (seconds / 3600.0)
 
+def get_date_time(date_tag, time_tag):
+    date_str = date_tag.printable
+    time_str = time_tag.printable
+    return date_str, time_str
+
 # Open the image file in binary mode
 image_file = open("myphoto.jpg", "rb")
 
@@ -44,6 +49,13 @@ if 'GPS GPSLatitude' in tags and 'GPS GPSLongitude' in tags:
     latitude = get_gps(gps_latitude)
     longitude = get_gps(gps_longitude)
 
+    # Extract the date and time information from the image if available
+    if 'EXIF DateTimeOriginal' in tags:
+        date_time_original = tags['EXIF DateTimeOriginal']
+        date, time = get_date_time(date_time_original, date_time_original)
+    else:
+        date, time = "N/A", "N/A"
+
     # Close the image file
     image_file.close()
 
@@ -57,7 +69,7 @@ if 'GPS GPSLatitude' in tags and 'GPS GPSLongitude' in tags:
     font = ImageFont.truetype("OpenSans-Regular.ttf", size=50)
 
     # Define the text you want to add
-    text = "Location: ({:.6f}, {:.6f})".format(latitude, longitude)
+    text = "Location: ({:.6f}, {:.6f})\nDateTime: {}".format(latitude, longitude, date)
 
     # Define the position of the text
     position = (10, 10)
