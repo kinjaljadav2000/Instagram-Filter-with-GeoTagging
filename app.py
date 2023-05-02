@@ -11,14 +11,14 @@ os.system("start microsoft.windows.camera:")
 input("Press Enter to save the captured image...")
 
 # Find the latest image in the Camera Roll directory
-file_list = glob.glob('C:/Users/Neer Gosrani/Pictures/Camera Roll/*.jpg')
+file_list = glob.glob('C:/Users/kinjal jadav/Pictures/Camera Roll/*.jpg')
 
 if not file_list:
     print("No JPG files found in Camera Roll directory")
 else:
     latest_file = max(file_list, key=os.path.getctime)
     # Specify the desired file path to save the captured image
-    save_path = "D:/Degree/Friends/Kinjal/Filtering and Geotagging/myphoto.jpg"
+    save_path = "C:/Degree/Kinjal/Filtering and Geotagging/myphoto.jpg"
 
     # # Move the latest image to the desired file path
     shutil.move(latest_file, save_path)
